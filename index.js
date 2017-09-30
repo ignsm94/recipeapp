@@ -26,7 +26,7 @@ const client = new Client({
   user: "ignat",
   host: "localhost",
   database: "recipes",
-  password: "121233",
+  password: "12345",
   port: 5432
 });
 
@@ -37,6 +37,24 @@ app.get("/", (req, res) => {
   client
     .query("select * from rlist")
     .then(result => res.render("index", { recipes: result.rows }))
+    .catch(err => console.error(err));
+});
+
+// Add recipe to DB
+app.post("/add", (req, res) => {
+  client
+    .query(
+      "insert into rlist(name, ingredients, description) values($1, $2, $3)",
+      [req.body.name, req.body.ingredients, req.body.description]
+    )
+    .then(res.redirect("/"))
+    .catch(err => console.error(err));
+});
+
+app.delete("/delete/:id", (req, res) => {
+  client
+    .query("delete from rlist where id = $1", [req.params.id])
+    .then(res => res.send(200))
     .catch(err => console.error(err));
 });
 
