@@ -3,12 +3,9 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   cons = require("consolidate"),
   dust = require("dustjs-helpers"),
-  pg = require("pg");
+  { Pool, Client } = require("pg");
 
 const app = express();
-
-// DB Connect
-const dbConnect = "postgres://ignat:121233@localhost:5432/recipes";
 
 // Assign Dust Engine To .dust Files
 app.engine("dust", cons.dust);
@@ -24,8 +21,23 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// DB connect
+const client = new Client({
+  user: "ignat",
+  host: "localhost",
+  database: "recipes",
+  password: "121233",
+  port: 5432
+});
+
+client.connect();
+
+// Get and render recipes from DB
 app.get("/", (req, res) => {
-  res.send("hello there!");
+  client
+    .query("select * from rlist")
+    .then(result => res.render("index", { recipes: result.rows }))
+    .catch(err => console.error(err));
 });
 
 // Server

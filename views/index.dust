@@ -1,0 +1,9 @@
+{>"layout" /}
+
+{<body}
+  {#recipes}
+    <h3>{name}</h3>
+    <p>{ingredients}</p>
+    <p>{description}</p>
+  {/recipes}
+{/body}
