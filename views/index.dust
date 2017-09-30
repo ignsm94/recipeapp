@@ -20,8 +20,23 @@
           <h5>Описание:</h5>
           <p>{description}</p>
           <ul class="recipe-menu" id="menu{id}">
-            <li><button type="button" class="btn btn-sm btn-warning edit-recipe" data-id="{id}" name="button">Изменить</button></li>
-            <li><button type="button" class="btn btn-sm btn-danger delete-recipe" data-id="{id}" name="button">Удалить</button></li>
+            <li>
+              <button type="button"
+              class="btn btn-sm btn-warning edit-recipe"
+              name="button"
+              data-id="{id}"
+              data-name="{name}"
+              data-ingredients="{ingredients}"
+              data-description="{description}"
+              data-toggle="modal"
+              data-target="#editFormModal">Изменить</button>
+            </li>
+            <li>
+              <button type="button"
+              class="btn btn-sm btn-danger delete-recipe"
+              name="button"
+              data-id="{id}">Удалить</button>
+            </li>
           </ul>
         </div>
       </div>
@@ -33,6 +48,7 @@
     <button class="btn btn-sm btn-primary" id="add-recipe" data-toggle="modal" data-target="#formModal">Добавить рецепт</button>
   </div>
 
+  {! ADD MODAL !}
   <div class="modal" id="formModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -55,6 +71,41 @@
             <div class="form-group">
               <label for="recipeDescr">Описание</label>
               <textarea class="form-control" name="description" id="recipeDescr" placeholder="Описание рецепта"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="btn btn-sm btn-primary" value="Добавить" />
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Отмена</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {! EDIT MODAL !}
+  <div class="modal" id="editFormModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Изменить рецепт</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="addRecipeForm" method="post" action="/edit">
+        <div class="modal-body">
+          <input type="hidden" id="edit-form-id" name="id">
+            <div class="form-group">
+              <label for="edit-form-name">Название</label>
+              <input type="text" name="name" class="form-control" id="edit-form-name" placeholder="Название рецепта">
+            </div>
+            <div class="form-group">
+              <label for="edit-form-ingredients">Ингредиенты</label>
+              <input type="text" name="ingredients" class="form-control" id="edit-form-ingredients" placeholder="Ингредиенты">
+            </div>
+            <div class="form-group">
+              <label for="edit-form-descr ">Описание</label>
+              <textarea class="form-control" name="description" id="edit-form-descr" placeholder="Описание рецепта"></textarea>
             </div>
         </div>
         <div class="modal-footer">

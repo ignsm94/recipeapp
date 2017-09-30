@@ -51,10 +51,21 @@ app.post("/add", (req, res) => {
     .catch(err => console.error(err));
 });
 
+// Remove from DB
 app.delete("/delete/:id", (req, res) => {
   client
     .query("delete from rlist where id = $1", [req.params.id])
     .then(res => res.send(200))
+    .catch(err => console.error(err));
+});
+
+app.post("/edit", (req, res) => {
+  client
+    .query(
+      "update rlist set name=$1, ingredients=$2, description=$3 where id=$4",
+      [req.body.name, req.body.ingredients, req.body.description, req.body.id]
+    )
+    .then(res.redirect("/"))
     .catch(err => console.error(err));
 });
 
